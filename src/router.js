@@ -8,11 +8,6 @@ const coletaController = require('./controllers/coletaController')
 
 const router = express.Router()
 
-{
-  method
-  route
-  funct
-}
 
 router.get('/points/cep', pointsController.getPointsByCEP)
 router.get('/points', pointsController.getAll)
