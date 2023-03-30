@@ -3,13 +3,13 @@ const connection = require('./connection')
 const addressModel = require('./addressModel')
 
 const getAll = async () => {
-  const [pessoas] = await connection.execute('SELECT * FROM pessoa')
-  return pessoas
+  const [users] = await connection.execute('SELECT * FROM pessoa')
+  return users
 }
 
-const insertPessoa = async (pessoa) => {
+const insertUser = async (user) => {
 
-  const { address } = pessoa
+  const { address } = user
 
   const insertedAddress = await addressModel.insertAddress(address)
     .then(({ insertId }) => { return insertId })
@@ -19,19 +19,19 @@ const insertPessoa = async (pessoa) => {
     nome,
     sobrenome,
     senha
-  } = pessoa
+  } = user
 
   const query = `INSERT INTO
     pessoa(cpf, nome, sobrenome, senha, id_endereco)
     VALUES(${JSON.stringify(cpf)}, ${JSON.stringify(nome)}, ${JSON.stringify(sobrenome)}, ${JSON.stringify(senha)}, ${JSON.stringify(insertedAddress)}) `
 
-  const [insertedPessoa] = await connection.query(query)
+  const [insertedUser] = await connection.query(query)
 
-  return insertedPessoa
+  return insertedUser
 
 }
 
 module.exports = {
   getAll,
-  insertPessoa
+  insertUser
 }

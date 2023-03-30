@@ -1,8 +1,8 @@
-const pessoaModel = require('../models/pessoaModel')
+const userModel = require('../models/userModel')
 
 const getAll = async (_request, response) => {
 
-  const pessoas = await pessoaModel
+  const users = await userModel
     .getAll()
     .then((data) => data)
     .catch(({ message }) => response.status(200).json({
@@ -12,13 +12,13 @@ const getAll = async (_request, response) => {
 
   return response.status(200).json({
     success: true,
-    pessoas
+    users
   })
 }
 
-const insertPessoa = async (request, response) => {
-  const insertedPessoa = await pessoaModel
-    .insertPessoa(request.body)
+const insertUser = async (request, response) => {
+  const insertedUser = await userModel
+    .insertUser(request.body)
     .then((data) => data)
     .catch(({ message }) => response.status(200).json({
       success: false,
@@ -28,11 +28,11 @@ const insertPessoa = async (request, response) => {
 
   return response.status(200).json({
     success: true,
-    insertedPessoa
+    insertedUser
   })
 }
 
 module.exports = {
   getAll,
-  insertPessoa
+  insertUser
 }
