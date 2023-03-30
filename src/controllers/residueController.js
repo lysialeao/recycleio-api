@@ -1,4 +1,4 @@
-const residuosModel = require('../models/residuosModel')
+const residuosModel = require('../models/residueModel')
 
 const getAll = async (_request, response) => {
 
