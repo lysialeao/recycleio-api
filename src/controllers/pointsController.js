@@ -5,9 +5,9 @@ const getAll = async (_request, response) => {
   const points = await pointsModel
     .getAll()
     .then((data) => data)
-    .catch(({ message }) => response.status(200).json({
+    .catch(({ message }) => response.status(500).json({
       success: false,
-      message
+      error: message
     }))
 
   return response.status(200).json({
@@ -20,9 +20,9 @@ const insertPoint = async (request, response) => {
   const insertedPoint = await pointsModel
     .insertPoint(request.body)
     .then((data) => data)
-    .catch(({ message }) => response.status(200).json({
+    .catch(({ message }) => response.status(500).json({
       success: false,
-      message
+      error: message
     }))
 
 
@@ -36,9 +36,9 @@ const getPointsByCEP = async (request, response) => {
   const points = await pointsModel
     .getPointsByCEP(request.body.cep)
     .then((data) => data)
-    .catch(({ message }) => response.status(200).json({
+    .catch(({ message }) => response.status(500).json({
       success: false,
-      message
+      error: message
     }))
 
   return response.status(200).json({

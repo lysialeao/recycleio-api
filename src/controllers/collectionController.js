@@ -5,9 +5,9 @@ const getAll = async (_request, response) => {
   const coletas = await collectionModel
     .getAll()
     .then((data) => data)
-    .catch(({ message }) => response.status(200).json({
+    .catch(({ message }) => response.status(500).json({
       success: false,
-      message
+      error: message
     }))
 
   return response.status(200).json({
@@ -22,7 +22,7 @@ const insertCollection = async (_request, response) => {
     .then(data => data )
     .catch(({ message }) => response.status(500).json({
       success: false,
-      message
+      error: message
     }))
 
   return response.status(200).json({

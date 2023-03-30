@@ -5,9 +5,9 @@ const getAll = async (_request, response) => {
   const adreses = await addressModel
     .getAll()
     .then((data) => data)
-    .catch(({ message }) => response.status(200).json({
+    .catch(({ message }) => response.status(500).json({
       success: false,
-      message
+      error: message
     }))
 
   return response.status(200).json({
@@ -20,9 +20,9 @@ const insertAddress = async (request, response) => {
   const insertedAddress = await addressModel
     .insertAddress(request.body)
     .then(({ insertId }) => insertId)
-    .catch(({ message }) => response.status(200).json({
+    .catch(({ message }) => response.status(500).json({
       success: false,
-      message
+      error: message
     }))
 
   return response.status(200).json({
