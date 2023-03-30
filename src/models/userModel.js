@@ -31,7 +31,14 @@ const insertUser = async (user) => {
 
 }
 
+const deleteUser = async (id) => {
+  const query = `DELETE FROM pessoa WHERE cpf=${JSON.stringify(id)}`
+  const deletedUser = await connection.query(query)
+  return deletedUser
+}
+
 module.exports = {
   getAll,
-  insertUser
+  insertUser,
+  deleteUser
 }

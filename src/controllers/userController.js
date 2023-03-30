@@ -32,7 +32,23 @@ const insertUser = async (request, response) => {
   })
 }
 
+const deleteUser = async (request, response) => {
+  const { id } = request.params
+  await userModel.deleteUser(id)
+    .then(data => data)
+    .catch(({ message }) => response.status(500).json({
+      success: false,
+      error: message
+    }))
+
+  return response.status(200).json({
+    success: true,
+    message: 'Usuário excluído com sucesso!'
+  })
+}
+
 module.exports = {
   getAll,
-  insertUser
+  insertUser,
+  deleteUser
 }
