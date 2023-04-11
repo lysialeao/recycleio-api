@@ -20,6 +20,7 @@ router.get('/residuo', residueController.getAll)
 router.post('/residuo', residueController.insertResiduo)
 router.post('/residuo/empresa', residueController.insertResiduoByPoint)
 router.get('/residuo/empresa', residueController.getResiduosByPoint)
+router.delete('/residuo/:id', residueController.deleteResidue)
 
 router.get('/pessoa', userController.getAll)
 router.post('/pessoa', userController.insertUser)
