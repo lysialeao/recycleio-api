@@ -1,0 +1,142 @@
+# Recycleio API
+
+Recycleio API is a RESTful web service that allows users to create and manage waste collection requests. It was developed using Node.js, Express, and MySQL.
+
+## Getting Started
+
+To get started with the Recycleio API, follow these steps:
+
+1.  Clone this repository to your local machine.
+2.  Run `npm install` to install the project dependencies.
+3.  Copy the `.env.example` file to `.env` and update the database credentials.
+4.  Run the database migrations using `npx sequelize-cli db:migrate`.
+5.  Start the application using `npm start`.
+
+## Endpoints
+
+The Recycleio API provides the following endpoints:
+
+### `GET /users`
+
+Returns a list of all users.
+
+### `POST /users`
+
+Creates a new user.
+
+### `GET /users/:id`
+
+Returns the user with the specified ID.
+
+### `PUT /users/:id`
+
+Updates the user with the specified ID.
+
+### `DELETE /users/:id`
+
+Deletes the user with the specified ID.
+
+### `GET /collection-requests`
+
+Returns a list of all waste collection requests.
+
+### `POST /collection-requests`
+
+Creates a new waste collection request.
+
+### `GET /collection-requests/:id`
+
+Returns the waste collection request with the specified ID.
+
+### `PUT /collection-requests/:id`
+
+Updates the waste collection request with the specified ID.
+
+### `DELETE /collection-requests/:id`
+
+Deletes the waste collection request with the specified ID.
+
+### `GET /collection-requests/types`
+
+Returns a list of all waste types.
+
+### `POST /collection-requests/types`
+
+Creates a new waste type.
+
+### `GET /collection-requests/types/:id`
+
+Returns the waste type with the specified ID.
+
+### `PUT /collection-requests/types/:id`
+
+Updates the waste type with the specified ID.
+
+### `DELETE /collection-requests/types/:id`
+
+Deletes the waste type with the specified ID.
+
+## Contributing
+
+Contributions to the Recycleio API are welcome! To contribute:
+
+1.  Fork this repository.
+2.  Create a new branch for your feature or bug fix.
+3.  Commit your changes with clear commit messages.
+4.  Push your changes to your fork.
+5.  Submit a pull request.
+
+## License
+
+The Recycleio API is open source software licensed under the [MIT license](https://opensource.org/licenses/MIT).# Recycleio API
+
+Recycleio API is a RESTful web service that allows users to create and manage waste collection requests. It was developed using Node.js, Express, and MySQL.
+
+## Getting Started
+
+To get started with the Recycleio API, follow these steps:
+
+1.  Clone this repository to your local machine.
+2.  Run `npm install` to install the project dependencies.
+3.  Copy the `.env.example` file to `.env` and update the database credentials.
+4.  Run the database migrations using `npx sequelize-cli db:migrate`.
+5.  Start the application using `npm start`.
+
+## Endpoints
+
+The Recycleio API provides the following endpoints:
+
+### `GET /users`
+
+Returns a list of all users.
+
+### `POST /users`
+
+Creates a new user.
+
+### `GET /users/:id`
+
+Returns the user with the specified ID.
+
+### `PUT /users/:id`
+
+Updates the user with the specified ID.
+
+### `DELETE /users/:id`
+
+Deletes the user with the specified ID.
+
+
+## Contributing
+
+Contributions to the Recycleio API are welcome! To contribute:
+
+1.  Fork this repository.
+2.  Create a new branch for your feature or bug fix.
+3.  Commit your changes with clear commit messages.
+4.  Push your changes to your fork.
+5.  Submit a pull request.
+
+## License
+
+The Recycleio API is open source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
