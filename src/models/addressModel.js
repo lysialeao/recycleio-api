@@ -1,22 +1,23 @@
 const connection = require('./connection')
 
 const getAll = async () => {
-  const [adreses] = await connection.execute('SELECT * FROM endereco')
+  const [adreses] = await connection.execute('SELECT * FROM address')
   return adreses
 }
 
 const insertAddress = async (address) => {
 
   const {
-    cep,
-    estado,
-    cidade,
-    bairro,
-    logradouro,
-    numero
+    zip_code,
+    state,
+    city,
+    neighborhood,
+    street,
+    number
   } = address
 
-  const query = `INSERT INTO endereco(cep, estado, cidade, bairro, logradouro, numero) VALUES(${JSON.stringify(cep)}, ${JSON.stringify(estado)}, ${JSON.stringify(cidade)}, ${JSON.stringify(bairro)}, ${JSON.stringify(logradouro)}, ${JSON.stringify(numero)})`
+  const query = `INSERT INTO address (zip_code, state, city, neighborhood, street, number) VALUES (?, ?, ?, ?, ?, ?)
+  `
 
   const [insertedAddress] = await connection.query(query)
 

@@ -25,7 +25,6 @@ const insertUser = async (request, response) => {
       error: message
     }))
 
-
   return response.status(200).json({
     success: true,
     insertedUser

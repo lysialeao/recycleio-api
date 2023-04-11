@@ -29,9 +29,16 @@ const getResiduosByPoint = async ({ id_empresa }) => {
   return residuos
 }
 
+const deleteResidue = async (id) => {
+  const query = `DELETE FROM residuo WHERE id=${JSON.stringify(id)}`
+  const deletedResidue = await connection.query(query)
+  return deletedResidue
+}
+
 module.exports = {
   getAll,
   insertResiduo,
   insertResiduoByPoint,
-  getResiduosByPoint
+  getResiduosByPoint,
+  deleteResidue
 }

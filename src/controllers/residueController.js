@@ -64,10 +64,26 @@ const getResiduosByPoint = async (request, response) => {
   )
 }
 
+const deleteResidue = async (request, response) => {
+  const { id } = request.params
+  await residuosModel.deleteResidue(id)
+    .then(data => data)
+    .catch(({ message }) => response.status(500).json({
+      success: false,
+      error: message
+    }))
+
+  return response.status(200).json({
+    success: true,
+    message: 'Resíduo excluído com sucesso!'
+  })
+}
+
 
 module.exports = {
   getAll,
   insertResiduo,
   insertResiduoByPoint,
-  getResiduosByPoint
+  getResiduosByPoint,
+  deleteResidue
 }
