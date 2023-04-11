@@ -36,45 +36,6 @@ Updates the user with the specified ID.
 
 Deletes the user with the specified ID.
 
-### `GET /collection-requests`
-
-Returns a list of all waste collection requests.
-
-### `POST /collection-requests`
-
-Creates a new waste collection request.
-
-### `GET /collection-requests/:id`
-
-Returns the waste collection request with the specified ID.
-
-### `PUT /collection-requests/:id`
-
-Updates the waste collection request with the specified ID.
-
-### `DELETE /collection-requests/:id`
-
-Deletes the waste collection request with the specified ID.
-
-### `GET /collection-requests/types`
-
-Returns a list of all waste types.
-
-### `POST /collection-requests/types`
-
-Creates a new waste type.
-
-### `GET /collection-requests/types/:id`
-
-Returns the waste type with the specified ID.
-
-### `PUT /collection-requests/types/:id`
-
-Updates the waste type with the specified ID.
-
-### `DELETE /collection-requests/types/:id`
-
-Deletes the waste type with the specified ID.
 
 ## Contributing
 
@@ -101,31 +62,6 @@ To get started with the Recycleio API, follow these steps:
 3.  Copy the `.env.example` file to `.env` and update the database credentials.
 4.  Run the database migrations using `npx sequelize-cli db:migrate`.
 5.  Start the application using `npm start`.
-
-## Endpoints
-
-The Recycleio API provides the following endpoints:
-
-### `GET /users`
-
-Returns a list of all users.
-
-### `POST /users`
-
-Creates a new user.
-
-### `GET /users/:id`
-
-Returns the user with the specified ID.
-
-### `PUT /users/:id`
-
-Updates the user with the specified ID.
-
-### `DELETE /users/:id`
-
-Deletes the user with the specified ID.
-
 
 ## Contributing
 
