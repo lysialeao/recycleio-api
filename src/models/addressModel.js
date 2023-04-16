@@ -19,7 +19,7 @@ const insertAddress = async (address) => {
   const query = `INSERT INTO address (zip_code, state, city, neighborhood, street, number) VALUES (?, ?, ?, ?, ?, ?)
   `
 
-  const [insertedAddress] = await connection.query(query)
+  const [insertedAddress] = await connection.query(query, [zip_code, state, city, neighborhood, street, number])
 
   return insertedAddress
 

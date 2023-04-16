@@ -4,9 +4,8 @@ const getAll = async (_request, response) => {
 
   const adreses = await addressModel
     .getAll()
-    .then((data) => data)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
@@ -21,7 +20,6 @@ const insertAddress = async (request, response) => {
     .insertAddress(request.body)
     .then(({ insertId }) => insertId)
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
