@@ -1,5 +1,5 @@
 const connection = require('./connection')
-const { residuoStatus } = require('../enum/residuoStatus')
+const { defaultStatus } = require('../enum/defaultStatus')
 
 const getAll = async () => {
   const [residuos] = await connection.execute('SELECT * FROM residuo')
@@ -17,7 +17,7 @@ const insertResiduo = async (residuo) => {
 }
 
 const insertResiduoByPoint = async ({ id_empresa, id_residuo }) => {
-  const query = `INSERT INTO residuo_status(id_empresa, id_residuo, status) VALUES(${JSON.stringify(id_empresa)}, ${JSON.stringify(id_residuo)}, ${JSON.stringify(residuoStatus.ativo)})`
+  const query = `INSERT INTO residuo_status(id_empresa, id_residuo, status) VALUES(${JSON.stringify(id_empresa)}, ${JSON.stringify(id_residuo)}, ${JSON.stringify(defaultStatus.ativo)})`
 
   const [insertedResiduo] = await connection.query(query)
 
