@@ -16,26 +16,11 @@ To get started with the Recycleio API, follow these steps:
 
 The Recycleio API provides the following endpoints:
 
-### `GET /users`
-
-Returns a list of all users.
-
-### `POST /users`
-
-Creates a new user.
-
-### `GET /users/:id`
-
-Returns the user with the specified ID.
-
-### `PUT /users/:id`
-
-Updates the user with the specified ID.
-
-### `DELETE /users/:id`
-
-Deletes the user with the specified ID.
-
+| HTTP Method | Endpoint | Description
+| ----------------- | ----------- | -----------
+| GET  |  /users | Returns a list of all users.
+| POST |  /users | Creates a new user.
+| DELETE |  /users/:id | Deletes the user with the specified ID.
 
 ## Contributing
 

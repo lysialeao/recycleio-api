@@ -3,7 +3,7 @@ const connection = require('./connection')
 const addressModel = require('./addressModel')
 
 const getAll = async () => {
-  const [points] = await connection.execute('SELECT * FROM pontos_coleta')
+  const [points] = await connection.execute('SELECT * FROM collection_points')
   return points
 }
 
