@@ -22,9 +22,9 @@ router.post('/residuo/empresa', residueController.insertResiduoByPoint)
 router.get('/residuo/empresa', residueController.getResiduosByPoint)
 router.delete('/residuo/:id', residueController.deleteResidue)
 
-router.get('/pessoa', userController.getAll)
-router.post('/pessoa', userController.insertUser)
-router.delete('/pessoa/:id', userController.deleteUser)
+router.get('/user', userController.getAll)
+router.post('/user', userController.insertUser)
+router.delete('/user/:id', userController.deleteUser)
 
 router.get('/collection', collectionController.getAll)
 router.post('/collection', collectionController.insertCollection)

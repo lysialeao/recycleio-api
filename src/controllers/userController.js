@@ -31,7 +31,6 @@ const insertUser = async (request, response) => {
 
 const deleteUser = async (request, response) => {
   const { id } = request.params
-  console.log(id)
   await userModel.deleteUser(id)
     .then()
     .catch(({ message }) => response.status(500).json({
