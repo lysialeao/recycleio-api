@@ -35,7 +35,7 @@ const insertUser = async (user) => {
 }
 
 const deleteUser = async (id) => {
-  const query = `DELETE FROM pessoa WHERE cpf=${JSON.stringify(id)}`
+  const query = `UPDATE user SET status='${defaultStatus.inactive}' WHERE cpf=${id}`
   const deletedUser = await connection.query(query)
   return deletedUser
 }

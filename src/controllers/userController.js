@@ -4,9 +4,8 @@ const getAll = async (_request, response) => {
 
   const users = await userModel
     .getAll()
-    .then((data) => data)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
@@ -19,9 +18,8 @@ const getAll = async (_request, response) => {
 const insertUser = async (request, response) => {
   const insertedUser = await userModel
     .insertUser(request.body)
-    .then((data) => data)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
@@ -33,16 +31,16 @@ const insertUser = async (request, response) => {
 
 const deleteUser = async (request, response) => {
   const { id } = request.params
+  console.log(id)
   await userModel.deleteUser(id)
-    .then(data => data)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
   return response.status(200).json({
     success: true,
-    message: 'Usuário excluído com sucesso!'
+    message: 'User deleted successfully'
   })
 }
 
