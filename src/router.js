@@ -1,6 +1,6 @@
 const express = require('express')
 
-const pointsController = require('./controllers/pointsController')
+const pointsController = require('./controllers/collectionPointsController')
 const addressController = require('./controllers/addressController')
 const residueController = require('./controllers/residueController')
 const userController = require('./controllers/userController')
