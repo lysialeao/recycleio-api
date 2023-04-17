@@ -2,8 +2,11 @@ const connection = require('./connection')
 
 const addressModel = require('./addressModel')
 
+const { defaultStatus } = require('../enum/defaultStatus')
+const { cryptoFunction } = require('../helpers/crypto')
+
 const getAll = async () => {
-  const [users] = await connection.execute('SELECT * FROM pessoa')
+  const [users] = await connection.execute('SELECT * FROM user')
   return users
 }
 
@@ -16,16 +19,16 @@ const insertUser = async (user) => {
 
   const {
     cpf,
-    nome,
-    sobrenome,
-    senha
+    first_name,
+    last_name,
+    password
   } = user
 
-  const query = `INSERT INTO
-    pessoa(cpf, nome, sobrenome, senha, id_endereco)
-    VALUES(${JSON.stringify(cpf)}, ${JSON.stringify(nome)}, ${JSON.stringify(sobrenome)}, ${JSON.stringify(senha)}, ${JSON.stringify(insertedAddress)}) `
+  const cipherpwd = cryptoFunction(password)
 
-  const [insertedUser] = await connection.query(query)
+  const query = `INSERT INTO user(cpf, first_name, last_name, password, address_id, status) VALUES(?, ?, ?, ?, ?, ?) `
+
+  const [insertedUser] = await connection.query(query, [cpf, first_name, last_name, cipherpwd, insertedAddress, defaultStatus.active])
 
   return insertedUser
 
