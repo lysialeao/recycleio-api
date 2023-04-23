@@ -2,12 +2,14 @@ const connection = require('./connection')
 
 const addressModel = require('./addressModel')
 
+const { defaultStatus }  = require('../enum/defaultStatus')
+
 const getAll = async () => {
   const [points] = await connection.execute('SELECT * FROM collection_points')
   return points
 }
 
-const insertPoint = async (point) => {
+const insertCollectionPoint = async (point) => {
 
   const { address } = point
 
@@ -16,39 +18,44 @@ const insertPoint = async (point) => {
 
   const {
     cnpj,
-    razao_social,
-    nome_fantasia,
-    telefone,
+    corporate_name,
+    trade_name,
+    telephone,
     email,
-    dias_coleta,
-    nome_responsavel_coletas,
-    email_responsavel_coletas,
+    collection_days,
+    collection_responsible_name,
+    collection_responsible_email,
   } = point
 
   const cnpjInt = parseInt(cnpj)
 
-  const query = `INSERT INTO
-    pontos_coleta(cnpj,razao_social,nome_fantasia,telefone, email, dias_coleta, nome_responsavel_coletas, email_responsavel_coletas, id_endereco)
-    VALUES(${JSON.stringify(cnpjInt)}, ${JSON.stringify(razao_social)}, ${JSON.stringify(nome_fantasia)}, ${JSON.stringify(telefone)}, ${JSON.stringify(email)}, ${JSON.stringify(dias_coleta)}, ${JSON.stringify(nome_responsavel_coletas)}, ${JSON.stringify(email_responsavel_coletas)}, ${JSON.stringify(insertedAddress)}) `
+  const query = `INSERT INTO collection_points(cnpj, corporate_name, trade_name, telephone, email, collection_days, collection_responsible_name, collection_responsible_email, address_id, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
-  const [insertedPoint] = await connection.query(query)
+  const [insertedPoint] = await connection.query(query, [cnpjInt, corporate_name, trade_name, telephone, email, collection_days, collection_responsible_name, collection_responsible_email, insertedAddress, defaultStatus.active])
 
   return insertedPoint
 
 }
 
-const getPointsByCEP = async (cep) => {
-  const [adresses] = await connection.execute(`SELECT * FROM endereco where cep=${JSON.stringify(cep)}`)
+const getCollectionPointByZipCode = async (zip_code) => {
+  const [addresses] = await connection.execute(`SELECT * FROM address where zip_code='${zip_code}'`)
 
-  const idAdreses = await adresses.map((address) => { return JSON.stringify(address.id)})
+  const addresses_id = await addresses.map((address) => { return address.id})
 
-  const [points] = await connection.execute('SELECT * FROM pontos_coleta where id_endereco in (' + idAdreses.join() + ')')
-
+  const [points] = await connection.execute('SELECT * FROM collection_points where address_id in (' + addresses_id.join() + ')')
   return points
+}
+
+const deleteCollectionPoint = async (cnpj) => {
+  const query = `UPDATE collection_points SET status='${defaultStatus.inactive}' WHERE cnpj='${cnpj}'`
+  const deletedPoint = await connection.query(query)
+  return deletedPoint
 }
 
 module.exports = {
   getAll,
-  insertPoint,
-  getPointsByCEP
+  insertCollectionPoint,
+  getCollectionPointByZipCode,
+  deleteCollectionPoint
 }

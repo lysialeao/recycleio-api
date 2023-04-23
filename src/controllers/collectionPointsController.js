@@ -17,7 +17,7 @@ const getAll = async (_request, response) => {
 
 const insertcollectionPoint = async (request, response) => {
   const insertedcollectionPoint = await collectionPointsModel
-    .insertcollectionPoint(request.body)
+    .insertCollectionPoint(request.body)
     .then()
     .catch(({ message }) => response.status(500).json({
       error: message
@@ -29,12 +29,12 @@ const insertcollectionPoint = async (request, response) => {
   })
 }
 
-const getcollectionPointsByCEP = async (request, response) => {
+const getCollectionPointByZipCode = async (request, response) => {
+  const { zip_code } = request.params
   const collectionPoints = await collectionPointsModel
-    .getcollectionPointsByCEP(request.params)
-    .then((data) => data)
+    .getCollectionPointByZipCode(zip_code)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
@@ -44,8 +44,23 @@ const getcollectionPointsByCEP = async (request, response) => {
   })
 }
 
+const deleteCollectionPoint = async (request, response) => {
+  const { cnpj } = request.params
+  await collectionPointsModel.deleteCollectionPoint(cnpj)
+    .then()
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
+  return response.status(200).json({
+    success: true,
+    message: 'Ponto de coleta excluído com sucesso!'
+  })
+}
+
 module.exports = {
-  getcollectionPointsByCEP,
+  getCollectionPointByZipCode,
   getAll,
-  insertcollectionPoint
+  insertcollectionPoint,
+  deleteCollectionPoint
 }

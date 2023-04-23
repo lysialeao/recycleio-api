@@ -8,10 +8,10 @@ const collectionController = require('./controllers/collectionController')
 
 const router = express.Router()
 
-
-router.get('/points/cep', pointsController.getPointsByCEP)
+router.get('/points/:zip_code', pointsController.getCollectionPointByZipCode)
 router.get('/points', pointsController.getAll)
-router.post('/points', pointsController.insertPoint)
+router.post('/points', pointsController.insertcollectionPoint)
+router.delete('/points/:cnpj', pointsController.deleteCollectionPoint)
 
 router.get('/address', addressController.getAll)
 router.post('/address', addressController.insertAddress)
