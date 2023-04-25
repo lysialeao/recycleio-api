@@ -18,7 +18,7 @@ const getAll = async (_request, response) => {
 const insertCollection = async (request, response) => {
   const newCollectionInserted = await collectionModel
     .insertCollection(request.body)
-    .then(data => data )
+    .then()
     .catch(({ message }) => response.status(500).json({
       error: message
     }))
