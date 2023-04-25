@@ -1,24 +1,23 @@
-const residuosModel = require('../models/residueModel')
+const wasteModel = require('../models/wasteModel')
 
 const getAll = async (_request, response) => {
 
-  const residuos = await residuosModel
+  const waste = await wasteModel
     .getAll()
-    .then((data) => data)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
   return response.status(200).json({
     success: true,
-    residuos
+    waste
   })
 }
 
-const insertResiduo = async (request, response) => {
-  const insertedResiduo = await residuosModel
-    .insertResiduo(request.body)
+const insertWaste = async (request, response) => {
+  const insertedWaste = await wasteModel
+    .insertWaste(request.body)
     .then(({ insertId }) => insertId)
     .catch(({ message }) => response.status(500).json({
       success: false,
@@ -27,14 +26,14 @@ const insertResiduo = async (request, response) => {
 
   return response.status(200).json({
     success: true,
-    insertedResiduo
+    insertedWaste
   }
   )
 }
 
-const insertResiduoByPoint = async (request, response) => {
-  const insertedResiduo = await residuosModel
-    .insertResiduoByPoint (request.body)
+const insertWasteByPoint = async (request, response) => {
+  const insertedWaste = await wasteModel
+    .insertWasteByPoint(request.body)
     .then(({ insertId }) => insertId)
     .catch(({ message }) => response.status(500).json({
       success: false,
@@ -43,33 +42,31 @@ const insertResiduoByPoint = async (request, response) => {
 
   return response.status(200).json({
     success: true,
-    insertedResiduo
+    insertedWaste
   }
   )
 }
 
-const getResiduosByPoint = async (request, response) => {
-  const residuosEmpresa = await residuosModel
-    .getResiduosByPoint(request.body)
-    .then((data) => data)
+const getWasteByPoints = async (request, response) => {
+  const wasteByCollectionPoint = await wasteModel
+    .getWasteByPoint(request.body)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
   return response.status(200).json({
     success: true,
-    residuosEmpresa
+    wasteByCollectionPoint
   }
   )
 }
 
-const deleteResidue = async (request, response) => {
+const deleteWaste = async (request, response) => {
   const { id } = request.params
-  await residuosModel.deleteResidue(id)
-    .then(data => data)
+  await wasteModel.deleteWaste(id)
+    .then()
     .catch(({ message }) => response.status(500).json({
-      success: false,
       error: message
     }))
 
@@ -82,8 +79,8 @@ const deleteResidue = async (request, response) => {
 
 module.exports = {
   getAll,
-  insertResiduo,
-  insertResiduoByPoint,
-  getResiduosByPoint,
-  deleteResidue
+  insertWaste,
+  insertWasteByPoint,
+  getWasteByPoints,
+  deleteWaste
 }
