@@ -2,7 +2,7 @@ const addressModel = require('../models/addressModel')
 
 const getAll = async (_request, response) => {
 
-  const adreses = await addressModel
+  const addresses = await addressModel
     .getAll()
     .then()
     .catch(({ message }) => response.status(500).json({
@@ -11,7 +11,7 @@ const getAll = async (_request, response) => {
 
   return response.status(200).json({
     success: true,
-    adreses
+    addresses
   })
 }
 
