@@ -11,7 +11,7 @@ const getAll = async () => {
 }
 
 const getUser = async ({ login, password }) => {
-  const [user] = await connection.execute(`SELECT * from user where email=${login} AND password=${password}`)
+  const [user] = await connection.execute(`SELECT * from user where email='${login}' AND password='${password}'`)
   return user
 }
 

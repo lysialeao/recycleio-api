@@ -12,7 +12,7 @@ const getAll = async () => {
 }
 
 const getCollectionPoint = async ({ login, password }) => {
-  const [point] = await connection.execute(`SELECT * FROM collection_points WHERE email=${login} AND password=${password}`)
+  const [point] = await connection.execute(`SELECT * FROM collection_points WHERE email='${login}' AND password='${password}'`)
   return point
 }
 

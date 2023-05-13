@@ -1,7 +1,7 @@
 
 const { cryptoFunction } = require('../helpers/crypto')
-const { getUser } = require('./userController')
-const { getCollectionPoint } = require('./collectionController')
+const { getUser } = require('../models/userModel')
+const { getCollectionPoint } = require('../models/collectionPointsModel')
 
 const getUserIdentify = async (request, response) => {
 
