@@ -10,6 +10,11 @@ const getAll = async () => {
   return users
 }
 
+const getUser = async ({ login, password }) => {
+  const [user] = await connection.execute(`SELECT * from user where email=${login} AND password=${password}`)
+  return user
+}
+
 const insertUser = async (user) => {
 
   const { address } = user
@@ -43,5 +48,6 @@ const deleteUser = async (id) => {
 module.exports = {
   getAll,
   insertUser,
-  deleteUser
+  deleteUser,
+  getUser
 }

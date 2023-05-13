@@ -9,6 +9,11 @@ const getAll = async () => {
   return points
 }
 
+const getCollectionPoint = async ({ login, password }) => {
+  const [point] = await connection.execute(`SELECT * FROM collection_points WHERE email=${login} AND password=${password}`)
+  return point
+}
+
 const insertCollectionPoint = async (point) => {
 
   const { address } = point
@@ -57,5 +62,6 @@ module.exports = {
   getAll,
   insertCollectionPoint,
   getCollectionPointByZipCode,
-  deleteCollectionPoint
+  deleteCollectionPoint,
+  getCollectionPoint
 }

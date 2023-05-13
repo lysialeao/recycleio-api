@@ -5,6 +5,7 @@ const addressController = require('./controllers/addressController')
 const wasteController = require('./controllers/wasteController')
 const userController = require('./controllers/userController')
 const collectionController = require('./controllers/collectionController')
+const loginController = require('./controllers/loginController')
 
 const router = express.Router()
 
@@ -28,6 +29,8 @@ router.delete('/user/:id', userController.deleteUser)
 
 router.get('/collection', collectionController.getAll)
 router.post('/collection', collectionController.insertCollection)
+
+router.post('/login', loginController.getUserIdentify)
 
 
 module.exports = router
