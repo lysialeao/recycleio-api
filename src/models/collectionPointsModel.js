@@ -4,6 +4,8 @@ const addressModel = require('./addressModel')
 
 const { defaultStatus }  = require('../enum/defaultStatus')
 
+const { cryptoFunction } = require('../helpers/crypto')
+
 const getAll = async () => {
   const [points] = await connection.execute('SELECT * FROM collection_points')
   return points
@@ -30,14 +32,16 @@ const insertCollectionPoint = async (point) => {
     collection_days,
     collection_responsible_name,
     collection_responsible_email,
+    password
   } = point
 
   const cnpjInt = parseInt(cnpj)
+  const cipherpwd = cryptoFunction(password)
 
-  const query = `INSERT INTO collection_points(cnpj, corporate_name, trade_name, telephone, email, collection_days, collection_responsible_name, collection_responsible_email, address_id, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  const query = `INSERT INTO collection_points(cnpj, corporate_name, trade_name, telephone, email, collection_days, collection_responsible_name, collection_responsible_email, address_id, status, password)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?), ?`
 
-  const [insertedPoint] = await connection.query(query, [cnpjInt, corporate_name, trade_name, telephone, email, collection_days, collection_responsible_name, collection_responsible_email, insertedAddress, defaultStatus.active])
+  const [insertedPoint] = await connection.query(query, [cnpjInt, corporate_name, trade_name, telephone, email, collection_days, collection_responsible_name, collection_responsible_email, insertedAddress, defaultStatus.active, cipherpwd])
 
   return insertedPoint
 
