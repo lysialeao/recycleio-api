@@ -26,14 +26,15 @@ const insertUser = async (user) => {
     cpf,
     first_name,
     last_name,
-    password
+    password,
+    email
   } = user
 
   const cipherpwd = cryptoFunction(password)
 
-  const query = `INSERT INTO user(cpf, first_name, last_name, password, address_id, status) VALUES(?, ?, ?, ?, ?, ?) `
+  const query = `INSERT INTO user(cpf, first_name, last_name, password, address_id, status, email) VALUES(?, ?, ?, ?, ?, ?, ?) `
 
-  const [insertedUser] = await connection.query(query, [cpf, first_name, last_name, cipherpwd, insertedAddress, defaultStatus.active])
+  const [insertedUser] = await connection.query(query, [cpf, first_name, last_name, cipherpwd, insertedAddress, defaultStatus.active, email])
 
   return insertedUser
 
