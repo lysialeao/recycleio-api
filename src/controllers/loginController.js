@@ -9,48 +9,38 @@ const getUserIdentify = async (request, response) => {
 
   const cipherpwd = cryptoFunction(password)
 
-  if ( type === 'cpf') {
-
-    const user = await getUser({ login, password: cipherpwd})
-      .then((user) => {
-        if(user.length < 0) {
-          return response.status(500).json({
-            error: 'Login ou senha incorretos'
-          })
-        }else {
-          return user
-        }
-
+  const validateUser = ({ user }) => {
+    if (user.length < 1) {
+      return response.status(401).json({
+        error: 'Login ou senha incorretos'
       })
-      .catch(({ message }) => response.status(500).json({
-        error: message
-      }))
-
+    } else {
       return response.status(200).json({
         success: true,
         user
       })
+    }
+  }
+
+  if ( type === 'cpf') {
+
+    const user = await getUser({ login, password: cipherpwd})
+      .then((user) => validateUser({ user }))
+      .catch(({ message }) => response.status(500).json({
+        error: message
+      }))
+
+      return user
   }
 
   if( type === 'cnpj') {
     const user = await getCollectionPoint({ login, password: cipherpwd})
-      .then((user) => {
-        if(user.length < 1) {
-          return response.status(500).json({
-            error: 'Login ou senha incorretos'
-          })
-        }else {
-          return user
-        }
-      })
+      .then((user) => validateUser({ user }))
       .catch(({ message }) => response.status(500).json({
         error: message
       }))
 
-      return response.status(200).json({
-        success: true,
-        user
-      })
+      return user
   }
 
   return response.status(401).json({
