@@ -16,6 +16,7 @@ router.delete('/points/:cnpj', pointsController.deleteCollectionPoint)
 
 router.get('/address', addressController.getAll)
 router.post('/address', addressController.insertAddress)
+router.get('/address/:id', addressController.getAddresById)
 
 router.get('/waste', wasteController.getAll)
 router.post('/waste', wasteController.insertWaste)

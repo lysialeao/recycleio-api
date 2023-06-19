@@ -1,8 +1,13 @@
 const connection = require('./connection')
 
 const getAll = async () => {
-  const [adreses] = await connection.execute('SELECT * FROM address')
-  return adreses
+  const [addreses] = await connection.execute('SELECT * FROM address')
+  return addreses
+}
+
+const getAddresById = async (id) => {
+  const [address] = await connection.execute(`SELECT * FROM address WHERE id = ${id}`)
+  return address
 }
 
 const insertAddress = async (address) => {
@@ -27,5 +32,6 @@ const insertAddress = async (address) => {
 
 module.exports = {
   getAll,
-  insertAddress
+  insertAddress,
+  getAddresById
 }

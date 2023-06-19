@@ -30,7 +30,24 @@ const insertAddress = async (request, response) => {
   )
 }
 
+const getAddresById = async (request, response) => {
+  const { id } = request.params
+  const address = await addressModel
+    .getAddresById(id)
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
+  return response.status(200).json({
+    success: true,
+    address
+  })
+}
+
+
+
 module.exports = {
   getAll,
-  insertAddress
+  insertAddress,
+  getAddresById
 }
