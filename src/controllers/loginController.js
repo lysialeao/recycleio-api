@@ -9,7 +9,7 @@ const getUserIdentify = async (request, response) => {
 
   const cipherpwd = cryptoFunction(password)
 
-  const validateUser = ({ user }) => {
+  const validateUser = ({ user, type }) => {
     if (user.length < 1) {
       return response.status(401).json({
         error: 'Login ou senha incorretos'
@@ -17,7 +17,10 @@ const getUserIdentify = async (request, response) => {
     } else {
       return response.status(200).json({
         success: true,
-        user
+        user: {
+          ...user,
+          type
+        }
       })
     }
   }
@@ -25,7 +28,7 @@ const getUserIdentify = async (request, response) => {
   if ( type === 'cpf') {
 
     const user = await getUser({ login, password: cipherpwd})
-      .then((user) => validateUser({ user }))
+      .then((user) => validateUser({ user, type: 'cpf' }))
       .catch(({ message }) => response.status(500).json({
         error: message
       }))
@@ -35,7 +38,7 @@ const getUserIdentify = async (request, response) => {
 
   if( type === 'cnpj') {
     const user = await getCollectionPoint({ login, password: cipherpwd})
-      .then((user) => validateUser({ user }))
+      .then((user) => validateUser({ user, type: 'cnpj' }))
       .catch(({ message }) => response.status(500).json({
         error: message
       }))
