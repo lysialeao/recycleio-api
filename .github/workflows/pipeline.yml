@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código-fonte
+      uses: actions/checkout@v2
+
+    - name: Configurar o ambiente
+      run: npm ci
+
+    - name: Executar testes
+      run: npm test
