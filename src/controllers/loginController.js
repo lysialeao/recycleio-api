@@ -9,6 +9,7 @@ const getUserIdentify = async (request, response) => {
 
   const cipherpwd = cryptoFunction(password)
 
+
   const validateUser = ({ user, type }) => {
     if (user.length < 1) {
       return response.status(401).json({
