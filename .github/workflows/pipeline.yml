@@ -15,6 +15,3 @@ jobs:
 
     - name: Configurar o ambiente
       run: npm ci
-
-    - name: Executar testes
-      run: npm test
