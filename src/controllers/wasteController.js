@@ -48,8 +48,9 @@ const insertWasteByPoint = async (request, response) => {
 }
 
 const getWasteByPoints = async (request, response) => {
+  const { id } = request.params
   const wasteByCollectionPoint = await wasteModel
-    .getWasteByPoint(request.body)
+    .getWasteByPoint({ collection_point_id: id})
     .then()
     .catch(({ message }) => response.status(500).json({
       error: message

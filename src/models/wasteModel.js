@@ -25,7 +25,11 @@ const insertWasteByPoint = async ({ collection_point_id, waste_id }) => {
 }
 
 const getWasteByPoint = async ({ collection_point_id }) => {
-  const [waste] = await connection.execute(`SELECT * FROM waste_status where collection_point_id=${JSON.stringify(collection_point_id)}`)
+  const [waste] = await connection.execute(`
+    SELECT waste_status.*, waste.name
+    FROM waste_status
+    JOIN waste ON waste_status.waste_id = waste.id
+    WHERE collection_point_id = ${JSON.stringify(collection_point_id)}`)
   return waste
 }
 

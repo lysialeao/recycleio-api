@@ -21,7 +21,7 @@ router.get('/address/:id', addressController.getAddresById)
 router.get('/waste', wasteController.getAll)
 router.post('/waste', wasteController.insertWaste)
 router.post('/waste/point', wasteController.insertWasteByPoint)
-router.get('/waste/point', wasteController.getWasteByPoints)
+router.get('/waste/point/:id', wasteController.getWasteByPoints)
 router.delete('/waste/:id', wasteController.deleteWaste)
 
 router.get('/user', userController.getAll)
