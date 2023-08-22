@@ -9,8 +9,9 @@ const loginController = require('./controllers/loginController')
 
 const router = express.Router()
 
-router.get('/points/:zip_code', pointsController.getCollectionPointByZipCode)
+// router.get('/points/:zip_code', pointsController.getCollectionPointByZipCode)
 router.get('/points', pointsController.getAll)
+router.get('/points/:cnpj', pointsController.getCollectionPoint)
 router.post('/points', pointsController.insertcollectionPoint)
 router.delete('/points/:cnpj', pointsController.deleteCollectionPoint)
 

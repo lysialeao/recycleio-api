@@ -58,9 +58,26 @@ const deleteCollectionPoint = async (request, response) => {
   })
 }
 
+const getCollectionPoint = async (request, response) => {
+  const { cnpj } = request.params
+  console.log(cnpj)
+  const collectionPoint = await collectionPointsModel
+    .getCollectionPointByCnpj(cnpj)
+    .then()
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
+  return response.status(200).json({
+    success: true,
+    collectionPoint
+  })
+}
+
 module.exports = {
   getCollectionPointByZipCode,
   getAll,
   insertcollectionPoint,
-  deleteCollectionPoint
+  deleteCollectionPoint,
+  getCollectionPoint
 }

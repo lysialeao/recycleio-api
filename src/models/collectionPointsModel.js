@@ -62,10 +62,34 @@ const deleteCollectionPoint = async (cnpj) => {
   return deletedPoint
 }
 
+const getCollectionPointByCnpj = async (cnpj) => {
+  const [point] = await connection.execute(` SELECT
+    collection_points.*,
+    JSON_OBJECT(
+        'id', address.id,
+        'street', address.street,
+        'city', address.city
+    ) AS address_details,
+    JSON_ARRAYAGG(
+        JSON_OBJECT(
+            'id', waste.id,
+            'name', waste.name
+        )
+    ) AS waste_details
+  FROM collection_points
+  INNER JOIN address ON collection_points.address_id = address.id
+  LEFT JOIN waste_status ON collection_points.cnpj = waste_status.collection_point_id
+  LEFT JOIN waste ON waste_status.waste_id = waste.id
+  WHERE collection_points.cnpj=${cnpj}
+  GROUP BY collection_points.cnpj, address.id; `)
+  return point
+}
+
 module.exports = {
   getAll,
   insertCollectionPoint,
   getCollectionPointByZipCode,
   deleteCollectionPoint,
-  getCollectionPoint
+  getCollectionPoint,
+  getCollectionPointByCnpj
 }
