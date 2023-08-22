@@ -31,6 +31,7 @@ router.delete('/user/:id', userController.deleteUser)
 
 router.get('/collection', collectionController.getAll)
 router.post('/collection', collectionController.insertCollection)
+router.get('/collection/point/:id', collectionController.getCollectionsByPoint)
 
 router.post('/login', loginController.getUserIdentify)
 

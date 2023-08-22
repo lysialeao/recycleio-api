@@ -60,7 +60,6 @@ const deleteCollectionPoint = async (request, response) => {
 
 const getCollectionPoint = async (request, response) => {
   const { cnpj } = request.params
-  console.log(cnpj)
   const collectionPoint = await collectionPointsModel
     .getCollectionPointByCnpj(cnpj)
     .then()

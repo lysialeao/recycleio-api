@@ -30,7 +30,23 @@ const insertCollection = async (request, response) => {
 
 }
 
+const getCollectionsByPoint = async (request, response) => {
+  const { id } = request.params
+  const collections = await collectionModel
+    .getCollections({ id })
+    .then()
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
+    return response.status(200).json({
+      success: true,
+      collections
+    })
+}
+
 module.exports = {
   getAll,
-  insertCollection
+  insertCollection,
+  getCollectionsByPoint
 }

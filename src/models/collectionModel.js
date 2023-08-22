@@ -33,7 +33,16 @@ const insertCollection = async (collection) => {
   return newCollection
 }
 
+const getCollections = async ({ id }) => {
+  const query = `SELECT * FROM collection WHERE collection_point_id = ${id}`
+
+  const collections = await connection.execute(query)
+
+  return collections
+}
+
 module.exports = {
   getAll,
-  insertCollection
+  insertCollection,
+  getCollections
 }
