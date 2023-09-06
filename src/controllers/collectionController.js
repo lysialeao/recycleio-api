@@ -45,8 +45,44 @@ const getCollectionsByPoint = async (request, response) => {
     })
 }
 
+const updateCollection = async (request, response) => {
+  const { id } = request.params;
+  const { status, weight } = request.body;
+
+  try {
+    const updatedCollection = await collectionModel.updateCollection({ id, status, weight });
+
+    return response.status(200).json({
+      success: true,
+      updatedCollection
+    });
+  } catch ({ message }) {
+    return response.status(500).json({
+      error: message
+    });
+  }
+}
+
+const getCollectionsByCpf = async (request, response) => {
+  const { id } = request.params
+  const collections = await collectionModel
+    .getCollectionsByCpf({ id })
+    .then()
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
+    return response.status(200).json({
+      success: true,
+      collections
+    })
+}
+
+
 module.exports = {
   getAll,
   insertCollection,
-  getCollectionsByPoint
+  getCollectionsByPoint,
+  updateCollection,
+  getCollectionsByCpf
 }

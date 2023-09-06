@@ -6,6 +6,7 @@ const wasteController = require('./controllers/wasteController')
 const userController = require('./controllers/userController')
 const collectionController = require('./controllers/collectionController')
 const loginController = require('./controllers/loginController')
+const reportsController = require('./controllers/reportsController')
 
 const router = express.Router()
 
@@ -32,6 +33,10 @@ router.delete('/user/:id', userController.deleteUser)
 router.get('/collection', collectionController.getAll)
 router.post('/collection', collectionController.insertCollection)
 router.get('/collection/point/:id', collectionController.getCollectionsByPoint)
+router.patch('/collection/:id', collectionController.updateCollection)
+router.get('/collection/user/:id', collectionController.getCollectionsByCpf)
+
+router.get('/reports/all/:id', reportsController.getAllCollections)
 
 router.post('/login', loginController.getUserIdentify)
 
