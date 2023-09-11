@@ -4,7 +4,7 @@ const getAllCollections = async (request, response) => {
 
   const { id } = request.params
 
-  const collections = await collectionModel
+  const reports = await collectionModel
     .getAllCollectionsReport({ id })
     .then()
     .catch(({ message }) => response.status(500).json({
@@ -13,7 +13,7 @@ const getAllCollections = async (request, response) => {
 
   return response.status(200).json({
     success: true,
-    collections
+    reports
   })
 }
 
