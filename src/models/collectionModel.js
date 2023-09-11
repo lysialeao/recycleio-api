@@ -99,9 +99,9 @@ const getAllCollectionsReport = async({ id }) => {
     WHERE
       collection_point_id = ${id};`
 
-  const [collections] = await connection.execute(query)
+  const [reports] = await connection.execute(query)
 
-  return collections
+  return reports
 }
 
 module.exports = {
