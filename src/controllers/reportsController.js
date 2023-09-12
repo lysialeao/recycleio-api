@@ -1,4 +1,5 @@
 const collectionModel = require('../models/collectionModel')
+const wasteModel = require('../models/wasteModel')
 
 const getAllCollections = async (request, response) => {
 
@@ -11,9 +12,17 @@ const getAllCollections = async (request, response) => {
       error: message
     }))
 
+  const residues = await wasteModel
+    .getReportsByCollections({ id })
+    .then()
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
   return response.status(200).json({
     success: true,
-    reports
+    reports,
+    residues
   })
 }
 

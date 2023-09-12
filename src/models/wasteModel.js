@@ -39,10 +39,25 @@ const deleteWaste = async (id) => {
   return deletedResidue
 }
 
+const getReportsByCollections = async ({ id }) => {
+
+  const query = `
+    SELECT waste.name, COUNT(collection.id) as count
+    FROM collection
+    JOIN waste ON collection.waste_id = waste.id
+    WHERE collection_point_id = ${id}
+    GROUP BY waste.name;
+  `
+
+  const [residues] = await connection.query(query)
+  return residues
+}
+
 module.exports = {
   getAll,
   insertWaste,
   insertWasteByPoint,
   getWasteByPoint,
-  deleteWaste
+  deleteWaste,
+  getReportsByCollections
 }
