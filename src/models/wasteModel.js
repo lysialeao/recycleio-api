@@ -42,10 +42,25 @@ const deleteWaste = async (id) => {
 const getReportsByCollections = async ({ id }) => {
 
   const query = `
-    SELECT waste.name, COUNT(collection.id) as count
+    SELECT waste.name, COUNT(collection.id) as count, SUM(collection.weight) as total_weight
     FROM collection
     JOIN waste ON collection.waste_id = waste.id
     WHERE collection_point_id = ${id}
+    GROUP BY waste.name;
+  `
+
+  const [residues] = await connection.query(query)
+  return residues
+}
+
+const getReportsByCollectionsInterval = async({ id, init, end }) => {
+
+  const query = `
+    SELECT waste.name, COUNT(collection.id) as count, SUM(collection.weight) as total_weight
+    FROM collection
+    JOIN waste ON collection.waste_id = waste.id
+    WHERE collection_point_id = ${id}
+    AND date_time BETWEEN "${init}" and "${end}"
     GROUP BY waste.name;
   `
 
@@ -59,5 +74,6 @@ module.exports = {
   insertWasteByPoint,
   getWasteByPoint,
   deleteWaste,
-  getReportsByCollections
+  getReportsByCollections,
+  getReportsByCollectionsInterval
 }

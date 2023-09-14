@@ -26,7 +26,34 @@ const getAllCollections = async (request, response) => {
   })
 }
 
+const getCollectionsByInterval = async (request, response) => {
+
+  const { id } = request.params
+  const { init, end } = request.body
+
+  const reports = await collectionModel
+    .getCollectionsReportInterval({ id, init, end })
+    .then()
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
+  const residues = await wasteModel
+    .getReportsByCollectionsInterval({ id, init, end })
+    .then()
+    .catch(({ message }) => response.status(500).json({
+      error: message
+    }))
+
+  return response.status(200).json({
+    success: true,
+    reports,
+    residues
+  })
+}
+
 
 module.exports = {
   getAllCollections,
+  getCollectionsByInterval
 }

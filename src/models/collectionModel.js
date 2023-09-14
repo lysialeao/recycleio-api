@@ -104,11 +104,30 @@ const getAllCollectionsReport = async({ id }) => {
   return reports
 }
 
+const getCollectionsReportInterval = async ({ id, init, end }) => {
+  const query = `
+    SELECT
+      COUNT(*) as total_records,
+      SUM(weight) as total_weight
+    FROM
+      collection
+    WHERE
+      collection_point_id = ${id}
+    AND
+      date_time BETWEEN "${init}" and "${end}";
+    `
+
+  const [reports] = await connection.execute(query)
+
+  return reports
+}
+
 module.exports = {
   getAll,
   insertCollection,
   getCollections,
   updateCollection,
   getCollectionsByCpf,
-  getAllCollectionsReport
+  getAllCollectionsReport,
+  getCollectionsReportInterval
 }

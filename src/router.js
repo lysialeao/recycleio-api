@@ -37,6 +37,7 @@ router.patch('/collection/:id', collectionController.updateCollection)
 router.get('/collection/user/:id', collectionController.getCollectionsByCpf)
 
 router.get('/reports/all/:id', reportsController.getAllCollections)
+router.get('/reports/interval/:id/', reportsController.getCollectionsByInterval)
 
 router.post('/login', loginController.getUserIdentify)
 
