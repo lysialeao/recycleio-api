@@ -53,7 +53,7 @@ const getReportsByCollections = async ({ id }) => {
   return residues
 }
 
-const getReportsByCollectionsInterval = async({ id, init, end }) => {
+const getReportsByCollectionsInterval = async ({ id, init, end }) => {
 
   const query = `
     SELECT waste.name, COUNT(collection.id) as count, SUM(collection.weight) as total_weight
