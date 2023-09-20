@@ -97,7 +97,28 @@ const getAllCollectionsReport = async({ id }) => {
     FROM
       collection
     WHERE
-      collection_point_id = ${id};`
+      collection_point_id = ${id}
+    AND
+      collection_status = "COMPLETED";
+      `
+
+  const [reports] = await connection.execute(query)
+
+  return reports
+}
+
+const getAllCollectionsReportUser = async({ id }) => {
+  const query = `
+    SELECT
+      COUNT(*) as total_records,
+      SUM(weight) as total_weight
+    FROM
+      collection
+    WHERE
+      user_id = ${id}
+    AND
+      collection_status = "COMPLETED";
+    `
 
   const [reports] = await connection.execute(query)
 
@@ -114,7 +135,29 @@ const getCollectionsReportInterval = async ({ id, init, end }) => {
     WHERE
       collection_point_id = ${id}
     AND
-      date_time BETWEEN "${init}" and "${end}";
+      date_time BETWEEN "${init}" and "${end}"
+    AND
+      collection_status = "COMPLETED";
+    `
+
+  const [reports] = await connection.execute(query)
+
+  return reports
+}
+
+const getCollectionsReportIntervalUser = async ({ id, init, end }) => {
+  const query = `
+    SELECT
+      COUNT(*) as total_records,
+      SUM(weight) as total_weight
+    FROM
+      collection
+    WHERE
+      user_id = ${id}
+    AND
+      date_time BETWEEN "${init}" and "${end}"
+    AND
+      collection_status = "COMPLETED";
     `
 
   const [reports] = await connection.execute(query)
@@ -129,5 +172,7 @@ module.exports = {
   updateCollection,
   getCollectionsByCpf,
   getAllCollectionsReport,
-  getCollectionsReportInterval
+  getCollectionsReportInterval,
+  getAllCollectionsReportUser,
+  getCollectionsReportIntervalUser
 }

@@ -46,6 +46,22 @@ const getReportsByCollections = async ({ id }) => {
     FROM collection
     JOIN waste ON collection.waste_id = waste.id
     WHERE collection_point_id = ${id}
+    AND collection_status = "COMPLETED"
+    GROUP BY waste.name;
+  `
+
+  const [residues] = await connection.query(query)
+  return residues
+}
+
+const getReportsByCollectionsUser = async ({ id }) => {
+
+  const query = `
+    SELECT waste.name, COUNT(collection.id) as count, SUM(collection.weight) as total_weight
+    FROM collection
+    JOIN waste ON collection.waste_id = waste.id
+    WHERE user_id = ${id}
+    AND collection_status = "COMPLETED"
     GROUP BY waste.name;
   `
 
@@ -61,6 +77,23 @@ const getReportsByCollectionsInterval = async ({ id, init, end }) => {
     JOIN waste ON collection.waste_id = waste.id
     WHERE collection_point_id = ${id}
     AND date_time BETWEEN "${init}" and "${end}"
+    AND collection_status = "COMPLETED"
+    GROUP BY waste.name;
+  `
+
+  const [residues] = await connection.query(query)
+  return residues
+}
+
+const getReportsByCollectionsIntervalUser = async ({ id, init, end }) => {
+
+  const query = `
+    SELECT waste.name, COUNT(collection.id) as count, SUM(collection.weight) as total_weight
+    FROM collection
+    JOIN waste ON collection.waste_id = waste.id
+    WHERE user_id = ${id}
+    AND date_time BETWEEN "${init}" and "${end}"
+    AND collection_status = "COMPLETED"
     GROUP BY waste.name;
   `
 
@@ -75,5 +108,7 @@ module.exports = {
   getWasteByPoint,
   deleteWaste,
   getReportsByCollections,
-  getReportsByCollectionsInterval
+  getReportsByCollectionsInterval,
+  getReportsByCollectionsUser,
+  getReportsByCollectionsIntervalUser
 }

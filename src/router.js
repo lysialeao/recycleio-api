@@ -38,6 +38,8 @@ router.get('/collection/user/:id', collectionController.getCollectionsByCpf)
 
 router.get('/reports/all/:id', reportsController.getAllCollections)
 router.post('/reports/interval/:id/', reportsController.getCollectionsByInterval)
+router.get('/reports/user/all/:id', reportsController.getAllCollectionsUser)
+router.post('/reports/user/interval/:id/', reportsController.getCollectionsByIntervalUser)
 
 router.post('/login', loginController.getUserIdentify)
 
