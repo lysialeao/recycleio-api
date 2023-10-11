@@ -4,53 +4,47 @@ const { getUser } = require('../models/userModel')
 const { getCollectionPoint } = require('../models/collectionPointsModel')
 
 const getUserIdentify = async (request, response) => {
+  const { login, password } = request.body;
+  const cipherpwd = cryptoFunction(password);
 
-  const { login, password, type } = request.body
-
-  const cipherpwd = cryptoFunction(password)
-
-
-  const validateUser = ({ user, type }) => {
-    if (user.length < 1) {
+  const validateUser = ({ user }) => {
+    if (!user || user.length < 1) {
       return response.status(401).json({
         error: 'Login ou senha incorretos'
-      })
+      });
     } else {
       return response.status(200).json({
         success: true,
         user: {
-          ...user,
-          type
+          ...user
         }
-      })
+      });
     }
-  }
+  };
 
-  if ( type === 'cpf') {
+  try {
+    const user = await getUser({ login, password: cipherpwd });
+    if (user && user.length > 0) {
+      return validateUser({ user, type: 'cpf' });
+    }
+  } catch (error) {}
 
-    const user = await getUser({ login, password: cipherpwd})
-      .then((user) => validateUser({ user, type: 'cpf' }))
-      .catch(({ message }) => response.status(500).json({
-        error: message
-      }))
-
-      return user
-  }
-
-  if( type === 'cnpj') {
-    const user = await getCollectionPoint({ login, password: cipherpwd})
-      .then((user) => validateUser({ user, type: 'cnpj' }))
-      .catch(({ message }) => response.status(500).json({
-        error: message
-      }))
-
-      return user
+  try {
+    const collectionPoint = await getCollectionPoint({ login, password: cipherpwd });
+    if (collectionPoint && collectionPoint.length > 0) {
+      return validateUser({ user: collectionPoint, type: 'cnpj' });
+    }
+  } catch (error) {
+    return response.status(500).json({
+      error: error.message
+    });
   }
 
   return response.status(401).json({
     error: 'Login ou senha incorretos'
-  })
+  });
 }
+
 
 module.exports = {
   getUserIdentify
