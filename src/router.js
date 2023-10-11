@@ -42,6 +42,7 @@ router.get('/reports/user/all/:id', reportsController.getAllCollectionsUser)
 router.post('/reports/user/interval/:id/', reportsController.getCollectionsByIntervalUser)
 
 router.post('/login', loginController.getUserIdentify)
+router.post('/checkemail', loginController.checkEmailExists)
 
 
 module.exports = router

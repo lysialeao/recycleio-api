@@ -46,9 +46,26 @@ const deleteUser = async (id) => {
   return deletedUser
 }
 
+const checkEmail = async (email) => {
+  const query = `
+    SELECT email 
+    FROM user 
+    WHERE email = '${email}'
+
+    UNION
+
+    SELECT email 
+    FROM collection_points
+    WHERE email = '${email}';
+`;
+  const [checks] = await connection.query(query)
+  return checks.length > 0
+}
+
 module.exports = {
   getAll,
   insertUser,
   deleteUser,
-  getUser
+  getUser,
+  checkEmail
 }

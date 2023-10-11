@@ -1,6 +1,6 @@
 
 const { cryptoFunction } = require('../helpers/crypto')
-const { getUser } = require('../models/userModel')
+const { getUser, checkEmail } = require('../models/userModel')
 const { getCollectionPoint } = require('../models/collectionPointsModel')
 
 const getUserIdentify = async (request, response) => {
@@ -45,7 +45,24 @@ const getUserIdentify = async (request, response) => {
   });
 }
 
+const checkEmailExists = async (request, response) => {
+  const { email } = request.body
+
+  const check = await checkEmail(email)
+    .then()
+      .catch(({ message }) => response.status(500).json({
+        error: message
+      }))
+
+  return response.status(200).json({
+    success: true,
+    emailAlreadyUsed: check
+  })
+
+}
+
 
 module.exports = {
-  getUserIdentify
+  getUserIdentify, 
+  checkEmailExists
 }
