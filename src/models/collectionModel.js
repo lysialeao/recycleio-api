@@ -14,10 +14,12 @@ const insertCollection = async (collection) => {
     user_id,
     collection_point_id,
     waste_id,
-    date_time
+    date_time,
+    weight, 
+    user_name
   } = collection
 
-  const query = `INSERT INTO collection(user_id, collection_point_id, date_time, collection_status, waste_id, status) VALUES (?, ?, ?, ?, ?, ?)`
+  const query = `INSERT INTO collection(user_id, collection_point_id, date_time, collection_status, waste_id, status, weight, user_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 
   const datetime = new Date(date_time)
 
@@ -27,13 +29,16 @@ const insertCollection = async (collection) => {
     datetime,
     collectionStatus.scheduled,
     waste_id,
-    defaultStatus.active
+    defaultStatus.active,
+    weight, 
+    user_name
   ])
 
   return newCollection
 }
 
 const getCollections = async ({ id }) => {
+
   const query = `SELECT
     c.*,
     JSON_OBJECT(
@@ -43,15 +48,13 @@ const getCollections = async ({ id }) => {
     w.name AS waste_name
     FROM
       collection c
-    JOIN
+    LEFT JOIN
       user u ON c.user_id = u.cpf
     JOIN
       waste w ON c.waste_id = w.id
     WHERE
       c.collection_point_id = ${id};
-
   `
-
   const [collections] = await connection.execute(query)
 
   return collections
