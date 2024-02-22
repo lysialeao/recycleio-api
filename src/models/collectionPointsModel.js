@@ -15,7 +15,7 @@ const getAll = async () => {
               SELECT waste.name
               FROM waste_status
               JOIN waste ON waste_status.waste_id = waste.id
-              WHERE collection_point_id = ?`, [point.cnpj]);
+              WHERE collection_point_id = ? AND waste_status.status = 'ACTIVE'`, [point.cnpj]);
 
           return {
               ...point,
@@ -80,14 +80,28 @@ const getCollectionPointByWastes = async ({ wastes }) => {
   
     const secondQuery = `SELECT * FROM collection_points WHERE cnpj IN (${collectionPointIdsString});`;
   
-    const [result] = await connection.execute(secondQuery);
-  
-  
-    return result
+    const [points] = await connection.execute(secondQuery);
+
+    const promises = points.map(async (point) => {
+      const [waste] = await connection.execute(`
+          SELECT waste.name
+          FROM waste_status
+          JOIN waste ON waste_status.waste_id = waste.id
+          WHERE collection_point_id = ? AND waste_status.status = 'ACTIVE'`, [point.cnpj]);
+
+      return {
+          ...point,
+          wastes: waste
+      };
+    });
+    const results = await Promise.all(promises);
+    return results;
+
 
   } else {
     return []
   }
+
 
 }
 
@@ -111,13 +125,13 @@ const getCollectionPointByCnpj = async (cnpj) => {
             'name', waste.name
         )
     ) AS waste_details
-  FROM collection_points
-  INNER JOIN address ON collection_points.address_id = address.id
-  LEFT JOIN waste_status ON collection_points.cnpj = waste_status.collection_point_id
-  LEFT JOIN waste ON waste_status.waste_id = waste.id
-  WHERE collection_points.cnpj=${cnpj}
-  GROUP BY collection_points.cnpj, address.id; `)
-  return point
+    FROM collection_points
+    INNER JOIN address ON collection_points.address_id = address.id
+    LEFT JOIN waste_status ON collection_points.cnpj = waste_status.collection_point_id
+    LEFT JOIN waste ON waste_status.waste_id = waste.id
+    WHERE collection_points.cnpj=${cnpj}
+    GROUP BY collection_points.cnpj, address.id; `)
+    return point
 }
 
 module.exports = {
