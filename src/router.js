@@ -10,7 +10,7 @@ const reportsController = require('./controllers/reportsController')
 
 const router = express.Router()
 
-// router.get('/points/:zip_code', pointsController.getCollectionPointByZipCode)
+router.post('/points/filter', pointsController.getCollectionPointByWastes)
 router.get('/points', pointsController.getAll)
 router.get('/points/:cnpj', pointsController.getCollectionPoint)
 router.post('/points', pointsController.insertcollectionPoint)

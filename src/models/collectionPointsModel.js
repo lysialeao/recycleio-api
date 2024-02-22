@@ -7,9 +7,29 @@ const { defaultStatus }  = require('../enum/defaultStatus')
 const { cryptoFunction } = require('../helpers/crypto')
 
 const getAll = async () => {
-  const [points] = await connection.execute('SELECT * FROM collection_points')
-  return points
-}
+  try {
+      const [points] = await connection.execute('SELECT * FROM collection_points');
+
+      const promises = points.map(async (point) => {
+          const [waste] = await connection.execute(`
+              SELECT waste.name
+              FROM waste_status
+              JOIN waste ON waste_status.waste_id = waste.id
+              WHERE collection_point_id = ?`, [point.cnpj]);
+
+          return {
+              ...point,
+              wastes: waste
+          };
+      });
+      const results = await Promise.all(promises);
+      return results;
+  } catch (error) {
+      console.error('Erro ao executar a consulta:', error);
+      throw error;
+  }
+};
+
 
 const getCollectionPoint = async ({ login, password }) => {
   const [point] = await connection.execute(`SELECT * FROM collection_points WHERE email='${login}' AND password='${password}'`)
@@ -47,13 +67,28 @@ const insertCollectionPoint = async (point) => {
 
 }
 
-const getCollectionPointByZipCode = async (zip_code) => {
-  const [addresses] = await connection.execute(`SELECT * FROM address where zip_code='${zip_code}'`)
+const getCollectionPointByWastes = async ({ wastes }) => {
+  const wasteIds = wastes.join(', '); // Transforma o vetor em uma string separada por vírgulas
 
-  const addresses_id = await addresses.map((address) => { return address.id})
+  const query = `SELECT collection_point_id FROM waste_status WHERE waste_id IN (${wasteIds}) AND status='${defaultStatus.active}'`;
 
-  const [points] = await connection.execute('SELECT * FROM collection_points where address_id in (' + addresses_id.join() + ')')
-  return points
+  const [wastesToFilter] = await connection.execute(query);
+
+  if(wastesToFilter.length >= 1 ) {
+    const collectionPointIds = wastesToFilter.map(waste => waste.collection_point_id);
+    const collectionPointIdsString = collectionPointIds.join(', ');
+  
+    const secondQuery = `SELECT * FROM collection_points WHERE cnpj IN (${collectionPointIdsString});`;
+  
+    const [result] = await connection.execute(secondQuery);
+  
+  
+    return result
+
+  } else {
+    return []
+  }
+
 }
 
 const deleteCollectionPoint = async (cnpj) => {
@@ -88,7 +123,7 @@ const getCollectionPointByCnpj = async (cnpj) => {
 module.exports = {
   getAll,
   insertCollectionPoint,
-  getCollectionPointByZipCode,
+  getCollectionPointByWastes,
   deleteCollectionPoint,
   getCollectionPoint,
   getCollectionPointByCnpj

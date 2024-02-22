@@ -29,10 +29,10 @@ const insertcollectionPoint = async (request, response) => {
   })
 }
 
-const getCollectionPointByZipCode = async (request, response) => {
-  const { zip_code } = request.params
+const getCollectionPointByWastes = async (request, response) => {
+  const { wastes } = request.body
   const collectionPoints = await collectionPointsModel
-    .getCollectionPointByZipCode(zip_code)
+    .getCollectionPointByWastes({ wastes })
     .then()
     .catch(({ message }) => response.status(500).json({
       error: message
@@ -74,7 +74,7 @@ const getCollectionPoint = async (request, response) => {
 }
 
 module.exports = {
-  getCollectionPointByZipCode,
+  getCollectionPointByWastes,
   getAll,
   insertcollectionPoint,
   deleteCollectionPoint,
