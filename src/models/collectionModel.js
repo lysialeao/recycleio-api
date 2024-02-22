@@ -16,18 +16,22 @@ const insertCollection = async (collection) => {
     waste_id,
     date_time,
     weight, 
-    user_name
+    user_name,
+    status
   } = collection
 
   const query = `INSERT INTO collection(user_id, collection_point_id, date_time, collection_status, waste_id, status, weight, user_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 
+
   const datetime = new Date(date_time)
+
+  const statusToAdd = status ? status : collectionStatus.scheduled
 
   const [newCollection] = await connection.query(query, [
     user_id,
     collection_point_id,
     datetime,
-    collectionStatus.scheduled,
+    statusToAdd,
     waste_id,
     defaultStatus.active,
     weight, 

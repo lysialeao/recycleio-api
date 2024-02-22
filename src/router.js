@@ -25,6 +25,7 @@ router.post('/waste', wasteController.insertWaste)
 router.post('/waste/point', wasteController.insertWasteByPoint)
 router.get('/waste/point/:id', wasteController.getWasteByPoints)
 router.delete('/waste/:id', wasteController.deleteWaste)
+router.patch('/waste/point/:id', wasteController.updatedWasteStatus)
 
 router.get('/user', userController.getAll)
 router.post('/user', userController.insertUser)

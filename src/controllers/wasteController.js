@@ -77,11 +77,30 @@ const deleteWaste = async (request, response) => {
   })
 }
 
+const updatedWasteStatus = async(request, response) => {
+  const { id } = request.params;
+  const { waste_id, status } = request.body;
+
+  try {
+    const updatedWasteStatus = await wasteModel.updateWasteStatus({ collection_point_id: id, status, waste_id });
+
+    return response.status(200).json({
+      success: true,
+      updatedWasteStatus
+    });
+  } catch ({ message }) {
+    return response.status(500).json({
+      error: message
+    });
+  }
+}
+
 
 module.exports = {
   getAll,
   insertWaste,
   insertWasteByPoint,
   getWasteByPoints,
-  deleteWaste
+  deleteWaste,
+  updatedWasteStatus
 }

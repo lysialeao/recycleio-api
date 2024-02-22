@@ -101,6 +101,17 @@ const getReportsByCollectionsIntervalUser = async ({ id, init, end }) => {
   return residues
 }
 
+const updateWasteStatus = async ({ collection_point_id, waste_id, status }) => {
+
+  const idNumber = Number(waste_id)
+  const pointIdNumber = Number(collection_point_id)
+
+  const query = `UPDATE waste_status SET status='${status}' WHERE waste_id=${idNumber} AND collection_point_id = ${pointIdNumber};`
+
+  const [updatedWasteStatus] = await connection.execute(query)
+  return updatedWasteStatus
+}
+
 module.exports = {
   getAll,
   insertWaste,
@@ -110,5 +121,6 @@ module.exports = {
   getReportsByCollections,
   getReportsByCollectionsInterval,
   getReportsByCollectionsUser,
-  getReportsByCollectionsIntervalUser
+  getReportsByCollectionsIntervalUser,
+  updateWasteStatus
 }
