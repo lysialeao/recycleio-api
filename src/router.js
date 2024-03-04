@@ -1,12 +1,12 @@
 const express = require('express')
 
-const pointsController = require('../src/controllers/collectionPointsController')
-const addressController = require('../src/controllers/addressController')
-const wasteController = require('../src/controllers/wasteController')
-const userController = require('../src/controllers/userController')
-const collectionController = require('../src/controllers/collectionController')
-const loginController = require('../src/controllers/loginController')
-const reportsController = require('../src/controllers/reportsController')
+const pointsController = require('./controllers/collectionPointsController')
+const addressController = require('./controllers/addressController')
+const wasteController = require('./controllers/wasteController')
+const userController = require('./controllers/userController')
+const collectionController = require('./controllers/collectionController')
+const loginController = require('./controllers/loginController')
+const reportsController = require('./controllers/reportsController')
 
 const router = express.Router()
 
