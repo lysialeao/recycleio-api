@@ -6,6 +6,7 @@ const connectionPool = mysql.createPool({
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT,
   waitForConnections: true, // Whether the pool should queue connections and wait for them to become available if there are no connections available in the pool.
   connectionLimit: 10, // Maximum number of connections in the pool.
   queueLimit: 0, // Maximum number of connection requests the pool will queue before returning an error from getConnection.
