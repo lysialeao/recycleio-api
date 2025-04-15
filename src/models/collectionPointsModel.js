@@ -122,7 +122,8 @@ const getCollectionPointByCnpj = async (cnpj) => {
     JSON_ARRAYAGG(
         JSON_OBJECT(
             'id', waste.id,
-            'name', waste.name
+            'name', waste.name,
+            'status': waste.status
         )
     ) AS waste_details
     FROM collection_points
